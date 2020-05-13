@@ -1,13 +1,14 @@
 // This is for updating table
+
 exports.up = function(knex) {
-  return knex.schema.createTable("cars", table =>{ 
-      table.increments();
-      table.string("VIN").notNullable().unique();
-      table.string("make", 30).notNullable();
-      table.string("model", 30).notNullable();
-      table.integer("milage").notNullable();
-      table.string("transmission type", 20).nullable();
-      table.string("title status", 20).nullable();
+  return knex.schema.createTable('cars', tbl =>{ 
+      tbl.increments();
+      tbl.string('VIN').notNullable().unique();
+      tbl.string('make', 30).notNullable();
+      tbl.string('model', 30).notNullable();
+      tbl.integer('mileage').notNullable();
+      tbl.string('transmission type', 20).nullable();
+      tbl.string('title status', 20).nullable();
   })
 };
 // This is for downgrading table
