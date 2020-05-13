@@ -11,4 +11,36 @@ server.get("/", (req,res) =>{
     .catch(err=>{res.status(500).json({message:err})})
 })
 
+//Before
+// server.get("/:id", (req,res) =>{
+//     db('cars').where({id:req.params.id})
+//     .then(vehicles=>{res.status(200).json({data:vehicles} )})
+//     .catch(err=>{res.status(500).json({message:err})})
+// })
+// After
+server.get("/:id", (req,res) =>{
+    db('cars').where({id:req.params.id})
+    .then(vehicles=>{
+       if(vehicles.length === 0) { res.status(404).json({message: "LIIESS"})} 
+       else {res.status(200).json({data:vehicles} )}})
+    .catch(err=>{res.status(500).json({message:err})})
+})
+// server.get = push 200 down to add an if else, if checks if empty FIRST!!!!
+
+// for req.body to work you need all required feilds filled
+server.post("/", (req, res) => {
+    db('cars').insert(req.body)
+    .then(count => { db('cars').where({id:count})
+    .then(vehicles=>{
+       if(vehicles.length === 0) { res.status(404).json({message: "LIIESS"})} 
+       else {res.status(200).json({data:vehicles} )}})
+    .catch(err=>{res.status(500).json({message:err})})})
+})
+
+
+
+
+
+
+
   module.exports = server 
